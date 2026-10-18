@@ -11,6 +11,10 @@
 [![Tests Passing](https://img.shields.io/badge/Tests-26%2F26_Passing-1A7F37?style=flat-square)](docs/TESTING.md)
 [![Security](https://img.shields.io/badge/E2EE-ChaCha20--Poly1305_%7C_Ed25519-8250DF?style=flat-square)](docs/SECURITY.md)
 
+<p align="center">
+  <img src="assets/clipsync-banner.jpg" alt="ClipSync Cross-Platform Clipboard Synchronization Banner" width="100%" style="border-radius: 8px; border: 1px solid #30363D;" />
+</p>
+
 </div>
 
 ---
@@ -137,6 +141,14 @@ graph TD
 - **Tier 1 — Local Direct Socket (Fastest):** Uses mDNS (`_clipsync._tcp`) to detect devices on the local Wi-Fi/LAN and opens a direct TLS/TCP connection. Sub-50ms latency.
 - **Tier 2 — WebRTC P2P (Cross-Network):** Uses a lightweight signaling server for ICE candidate exchange, establishing an encrypted P2P data channel directly across routers.
 - **Tier 3 — Encrypted Relay Forwarder (Fallback):** For symmetric NATs or restrictive firewalls, traffic is routed through a stateless WebSocket relay. Payloads remain fully E2EE encrypted end-to-end; the relay cannot inspect contents.
+
+---
+
+## 🔄 Live Real-Time Synchronization Flow
+
+<p align="center">
+  <img src="assets/sync-animation.svg" alt="ClipSync Animated Live Sync Protocol" width="100%" />
+</p>
 
 ---
 

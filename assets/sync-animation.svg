@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 280" width="100%" height="280" style="background:#0D1117; border-radius:12px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <style>
+    .node-box { fill: #161B22; stroke: #30363D; stroke-width: 2; rx: 10px; }
+    .node-header { fill: #21262D; }
+    .text-title { fill: #F0F6FC; font-size: 14px; font-weight: 700; }
+    .text-sub { fill: #8B949E; font-size: 12px; }
+    .text-code { fill: #58A6FF; font-family: ui-monospace,SFMono-Regular,Consolas,monospace; font-size: 12px; }
+    .track-line { stroke: #30363D; stroke-width: 2; stroke-dasharray: 6 6; }
+    .badge-bg { fill: #1F242C; stroke: #238636; stroke-width: 1.5; rx: 6px; }
+    .badge-text { fill: #3FB950; font-size: 11px; font-weight: 600; }
+    
+    /* Animation Keyframes */
+    @keyframes slidePacket {
+      0% { transform: translateX(0px); opacity: 0; }
+      10% { opacity: 1; }
+      45% { transform: translateX(180px); }
+      55% { transform: translateX(180px); }
+      90% { opacity: 1; }
+      100% { transform: translateX(360px); opacity: 0; }
+    }
+    
+    @keyframes pulseRing {
+      0% { r: 16px; opacity: 0.8; stroke: #2563EB; }
+      50% { r: 24px; opacity: 0.2; stroke: #388BFD; }
+      100% { r: 16px; opacity: 0.8; stroke: #2563EB; }
+    }
+    
+    @keyframes pulseStatus {
+      0%, 100% { fill: #238636; }
+      50% { fill: #3FB950; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    .animated-packet {
+      animation: slidePacket 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    
+    .ping-circle {
+      animation: pulseRing 2s ease-in-out infinite;
+    }
+
+    .status-dot {
+      animation: pulseStatus 1.5s ease-in-out infinite;
+    }
+
+    .cursor-blink {
+      animation: blink 0.8s infinite;
+    }
+  </style>
+
+  <!-- Background Decorative Grid -->
+  <g stroke="#21262D" stroke-width="1" opacity="0.4">
+    <line x1="0" y1="70" x2="840" y2="70" />
+    <line x1="0" y1="140" x2="840" y2="140" />
+    <line x1="0" y1="210" x2="840" y2="210" />
+    <line x1="140" y1="0" x2="140" y2="280" />
+    <line x1="280" y1="0" x2="280" y2="280" />
+    <line x1="420" y1="0" x2="420" y2="280" />
+    <line x1="560" y1="0" x2="560" y2="280" />
+    <line x1="700" y1="0" x2="700" y2="280" />
+  </g>
+
+  <!-- Connection Track Line -->
+  <line x1="240" y1="140" x2="600" y2="140" class="track-line" />
+
+  <!-- Center Security Lock Hub -->
+  <g transform="translate(420, 140)">
+    <circle cx="0" cy="0" r="28" fill="#161B22" stroke="#2563EB" stroke-width="2" />
+    <circle cx="0" cy="0" r="16" fill="none" class="ping-circle" />
+    <!-- Lock Icon -->
+    <path d="M-6,-2 L-6,-6 C-6,-9.3 -3.3,-12 0,-12 C3.3,-12 6,-9.3 6,-6 L6,-2 L7,-2 C8.1,-2 9,-1.1 9,0 L9,8 C9,9.1 8.1,10 7,10 L-7,10 C-8.1,10 -9,9.1 -9,8 L-9,0 C-9,-1.1 -8.1,-2 -7,-2 Z M-4,-2 L4,-2 L4,-6 C4,-8.2 2.2,-10 0,-10 C-2.2,-10 -4,-8.2 -4,-6 Z" fill="#58A6FF" />
+    <text x="0" y="32" fill="#8B949E" font-size="10" font-weight="600" text-anchor="middle">E2EE ChaCha20</text>
+  </g>
+
+  <!-- Moving Animated Sync Packet -->
+  <g class="animated-packet" transform="translate(240, 140)">
+    <rect x="-45" y="-18" width="90" height="36" rx="8" fill="#1F6FEB" stroke="#58A6FF" stroke-width="1.5" />
+    <text x="0" y="4" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">⚡ SYNC PKT</text>
+  </g>
+
+  <!-- LEFT NODE: Windows Desktop -->
+  <g transform="translate(30, 45)">
+    <!-- Box -->
+    <rect x="0" y="0" width="210" height="190" class="node-box" />
+    <!-- Header -->
+    <path d="M0,10 Q0,0 10,0 L200,0 Q210,0 210,10 L210,38 L0,38 Z" class="node-header" />
+    <!-- Window buttons -->
+    <circle cx="16" cy="19" r="4.5" fill="#F85149" />
+    <circle cx="30" cy="19" r="4.5" fill="#E3B341" />
+    <circle cx="44" cy="19" r="4.5" fill="#2EA043" />
+    <text x="60" y="23" class="text-title">Windows 11 PC</text>
+    <circle cx="192" cy="19" r="4" class="status-dot" />
+
+    <!-- Content -->
+    <g transform="translate(16, 56)">
+      <text x="0" y="14" class="text-sub">Identity:</text>
+      <text x="56" y="14" class="text-code">win-node-8a1f</text>
+      
+      <!-- Code Box -->
+      <rect x="0" y="26" width="178" height="52" rx="6" fill="#0D1117" stroke="#30363D" />
+      <text x="10" y="46" class="text-code">https://github.com/clipsync</text>
+      <rect x="166" y="36" width="2" height="14" fill="#58A6FF" class="cursor-blink" />
+
+      <!-- Status Pill -->
+      <rect x="0" y="90" width="85" height="22" class="badge-bg" />
+      <text x="42" y="105" class="badge-text" text-anchor="middle">✔ COPIED</text>
+      <text x="96" y="105" fill="#8B949E" font-size="11">0.12 ms</text>
+    </g>
+  </g>
+
+  <!-- RIGHT NODE: Android Phone -->
+  <g transform="translate(600, 45)">
+    <!-- Box -->
+    <rect x="0" y="0" width="210" height="190" class="node-box" />
+    <!-- Header -->
+    <path d="M0,10 Q0,0 10,0 L200,0 Q210,0 210,10 L210,38 L0,38 Z" class="node-header" />
+    <!-- Mobile speaker notch & Title -->
+    <rect x="16" y="16" width="20" height="5" rx="2.5" fill="#30363D" />
+    <text x="48" y="23" class="text-title">Android Phone</text>
+    <circle cx="192" cy="19" r="4" class="status-dot" />
+
+    <!-- Content -->
+    <g transform="translate(16, 56)">
+      <text x="0" y="14" class="text-sub">Identity:</text>
+      <text x="56" y="14" class="text-code">pixel-8-fe92</text>
+      
+      <!-- Code Box -->
+      <rect x="0" y="26" width="178" height="52" rx="6" fill="#0D1117" stroke="#30363D" />
+      <text x="10" y="46" class="text-code">https://github.com/clipsync</text>
+
+      <!-- Status Pill -->
+      <rect x="0" y="90" width="85" height="22" class="badge-bg" stroke="#1F6FEB" fill="#161B22" />
+      <text x="42" y="105" fill="#58A6FF" font-size="11" font-weight="600" text-anchor="middle">✔ PASTED</text>
+      <text x="96" y="105" fill="#8B949E" font-size="11">mDNS Local</text>
+    </g>
+  </g>
+</svg>
