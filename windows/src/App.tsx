@@ -223,6 +223,15 @@ export function App() {
     setPeers((prev) => prev.filter((p) => p.device_id !== deviceId));
   };
 
+  const handleUpdateDeviceName = async (newName: string) => {
+    try {
+      const updated = await tauriInvoke<string>('update_device_name', { newName });
+      setDeviceInfo((prev) => ({ ...prev, device_name: updated }));
+    } catch (err) {
+      console.error('Failed to update device name:', err);
+    }
+  };
+
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh', overflow: 'hidden' }}>
       <Navigation
@@ -277,6 +286,8 @@ export function App() {
           <SettingsTab
             settings={settings}
             onSaveSettings={setSettings}
+            deviceName={deviceInfo ? deviceInfo.device_name : 'Windows Desktop'}
+            onUpdateDeviceName={handleUpdateDeviceName}
           />
         )}
       </main>

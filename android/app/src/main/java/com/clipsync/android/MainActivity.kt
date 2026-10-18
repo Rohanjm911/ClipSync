@@ -77,9 +77,13 @@ enum class MobileTab {
 
 @Composable
 fun MainAppScreen() {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val prefs = remember { context.getSharedPreferences("clipsync_prefs", android.content.Context.MODE_PRIVATE) }
     var currentTab by remember { mutableStateOf(MobileTab.DASHBOARD) }
     var connectionState by remember { mutableStateOf(ConnectionState.CONNECTED_DIRECT) }
-    var deviceName by remember { mutableStateOf("Android-Pixel-84F2") }
+    var deviceName by remember {
+        mutableStateOf(prefs.getString("device_name", "Android-Pixel-84F2") ?: "Android-Pixel-84F2")
+    }
 
     val mockPeers = remember {
         mutableStateListOf(
@@ -196,7 +200,13 @@ fun MainAppScreen() {
                 MobileTab.PAIRING -> PairingScreen(onPairSuccess = { peer -> mockPeers.add(peer) })
                 MobileTab.DEVICES -> DevicesScreen(mockPeers, onRevoke = { dev -> mockPeers.remove(dev) })
                 MobileTab.HISTORY -> HistoryScreen(historyItems, onClear = { historyItems.clear() })
-                MobileTab.SETTINGS -> SettingsScreen()
+                MobileTab.SETTINGS -> SettingsScreen(
+                    deviceName = deviceName,
+                    onUpdateDeviceName = { newName ->
+                        deviceName = newName
+                        prefs.edit().putString("device_name", newName).apply()
+                    }
+                )
             }
         }
     }
@@ -532,14 +542,78 @@ fun HistoryScreen(history: List<ClipboardItem>, onClear: () -> Unit) {
 }
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    deviceName: String,
+    onUpdateDeviceName: (String) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp)
     ) {
         Text(text = "Settings", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        Text(text = "Network mode and security preferences", fontSize = 13.sp, color = TextSecondaryDark, modifier = Modifier.padding(bottom = 20.dp))
+        Text(text = "Device name, network mode and security preferences", fontSize = 13.sp, color = TextSecondaryDark, modifier = Modifier.padding(bottom = 20.dp))
+
+        // Device & Display Name Card
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(1.dp, SolidBorderDark, RoundedCornerShape(8.dp)),
+            colors = CardDefaults.cardColors(containerColor = SolidSurfaceDark),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(text = "Device & Display Name", fontWeight = FontWeight.SemiBold, color = Color.White, fontSize = 14.sp)
+                Text(text = "The name visible to your paired Windows PC and peer devices.", fontSize = 12.sp, color = TextSecondaryDark, modifier = Modifier.padding(top = 2.dp, bottom = 12.dp))
+
+                var editingName by remember(deviceName) { mutableStateOf(deviceName) }
+                var savedFeedback by remember { mutableStateOf(false) }
+
+                OutlinedTextField(
+                    value = editingName,
+                    onValueChange = {
+                        editingName = it
+                        savedFeedback = false
+                    },
+                    label = { Text("Display Name") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = SolidPrimary,
+                        unfocusedBorderColor = SolidBorderDark
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Button(
+                        onClick = {
+                            if (editingName.isNotBlank()) {
+                                onUpdateDeviceName(editingName.trim())
+                                savedFeedback = true
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = SolidPrimary),
+                        shape = RoundedCornerShape(6.dp)
+                    ) {
+                        Text("Save Name", fontWeight = FontWeight.SemiBold)
+                    }
+
+                    if (savedFeedback) {
+                        Text("Updated!", color = SolidSuccess, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Card(
             modifier = Modifier

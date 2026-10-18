@@ -5,14 +5,33 @@ import { IconCheck } from './Icons';
 interface SettingsTabProps {
   settings: AppSettings;
   onSaveSettings: (settings: AppSettings) => void;
+  deviceName: string;
+  onUpdateDeviceName: (name: string) => void;
 }
 
 export const SettingsTab: React.FC<SettingsTabProps> = ({
   settings: initialSettings,
   onSaveSettings,
+  deviceName,
+  onUpdateDeviceName,
 }) => {
   const [settings, setSettings] = useState<AppSettings>(initialSettings);
   const [saved, setSaved] = useState(false);
+  const [editingName, setEditingName] = useState(deviceName);
+  const [nameSaved, setNameSaved] = useState(false);
+
+  // Sync editingName when external deviceName changes
+  React.useEffect(() => {
+    setEditingName(deviceName);
+  }, [deviceName]);
+
+  const handleSaveName = () => {
+    if (editingName.trim()) {
+      onUpdateDeviceName(editingName.trim());
+      setNameSaved(true);
+      setTimeout(() => setNameSaved(false), 2500);
+    }
+  };
 
   const handleSave = () => {
     onSaveSettings(settings);
@@ -31,7 +50,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
         <div>
           <h1 style={{ fontSize: '20px', fontWeight: 600, letterSpacing: '-0.3px' }}>Settings</h1>
           <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Configure network discovery, self-hosted endpoints, and privacy controls
+            Configure device name, network discovery, self-hosted endpoints, and privacy controls
           </p>
         </div>
         <button className="primary" onClick={handleSave}>
@@ -41,6 +60,45 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* Device & Display Name Card */}
+        <div style={{
+          backgroundColor: 'var(--bg-surface)',
+          border: '1px solid var(--border-subtle)',
+          borderRadius: 'var(--radius-md)',
+          padding: '20px',
+        }}>
+          <h2 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Device & Username (Display Name)</h2>
+          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '14px' }}>
+            This name identifies this PC to paired Android phones during synchronization and QR pairing.
+          </p>
+
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <input
+              type="text"
+              value={editingName}
+              onChange={(e) => setEditingName(e.target.value)}
+              placeholder="e.g. My-Workstation"
+              maxLength={32}
+              style={{
+                flex: 1,
+                padding: '8px 12px',
+                backgroundColor: 'var(--bg-primary)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: 'var(--radius-sm)',
+                color: 'var(--text-primary)',
+                fontSize: '13px',
+              }}
+            />
+            <button
+              className="secondary"
+              onClick={handleSaveName}
+              disabled={!editingName.trim() || editingName === deviceName}
+              style={{ whiteSpace: 'nowrap' }}
+            >
+              {nameSaved ? 'Saved!' : 'Update Name'}
+            </button>
+          </div>
+        </div>
         {/* Network Mode */}
         <div style={{
           backgroundColor: 'var(--bg-surface)',

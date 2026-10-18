@@ -14,7 +14,7 @@ use storage::{Database, StoredDeviceIdentity, StoredHistoryItem, StoredPairedDev
 struct AppState {
     db: Arc<Mutex<Database>>,
     identity: Arc<Mutex<IdentityKeyPair>>,
-    device_name: String,
+    device_name: Arc<Mutex<String>>,
     device_id: String,
     active_pairing_session: Arc<Mutex<Option<protocol::PairingPayload>>>,
 }
@@ -40,12 +40,33 @@ pub struct ConnectionStatus {
 #[tauri::command]
 fn get_device_identity(state: tauri::State<AppState>) -> DeviceInfo {
     let id = state.identity.lock().unwrap();
+    let name = state.device_name.lock().unwrap().clone();
     DeviceInfo {
         device_id: state.device_id.clone(),
-        device_name: state.device_name.clone(),
+        device_name: name,
         ed25519_pubkey: id.ed25519_pubkey_hex(),
         x25519_pubkey: id.x25519_pubkey_hex(),
     }
+}
+
+#[tauri::command]
+fn update_device_name(state: tauri::State<AppState>, new_name: String) -> Result<String, String> {
+    let trimmed = new_name.trim();
+    if trimmed.is_empty() {
+        return Err("Device name cannot be empty".to_string());
+    }
+    let sanitized = trimmed.chars().take(32).collect::<String>();
+    let mut name_lock = state.device_name.lock().unwrap();
+    *name_lock = sanitized.clone();
+
+    let db = state.db.lock().unwrap();
+    let _ = db.set_setting("device_name", &sanitized);
+    if let Ok(Some(mut id)) = db.get_identity() {
+        id.device_name = sanitized.clone();
+        let _ = db.save_identity(&id);
+    }
+
+    Ok(sanitized)
 }
 
 #[tauri::command]
@@ -59,7 +80,7 @@ fn generate_pairing_qr(state: tauri::State<AppState>) -> Result<protocol::Pairin
     let payload = protocol::PairingPayload {
         session_id,
         device_id: state.device_id.clone(),
-        device_name: state.device_name.clone(),
+        device_name: state.device_name.lock().unwrap().clone(),
         ed25519_pubkey: id.ed25519_pubkey_hex(),
         x25519_pubkey: id.x25519_pubkey_hex(),
         sas_code,
@@ -233,10 +254,20 @@ fn main() {
         }
     };
 
+    let initial_device_name = {
+        let db_lock = db.lock().unwrap();
+        let custom = db_lock.get_setting("device_name", "");
+        if !custom.is_empty() {
+            custom
+        } else {
+            device_name
+        }
+    };
+
     let app_state = AppState {
         db,
         identity: Arc::new(Mutex::new(identity)),
-        device_name,
+        device_name: Arc::new(Mutex::new(initial_device_name)),
         device_id,
         active_pairing_session: Arc::new(Mutex::new(None)),
     };
@@ -245,6 +276,7 @@ fn main() {
         .manage(app_state)
         .invoke_handler(tauri::generate_handler![
             get_device_identity,
+            update_device_name,
             generate_pairing_qr,
             confirm_pairing,
             get_paired_devices,
