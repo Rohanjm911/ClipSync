@@ -246,6 +246,23 @@ export const PairingTab: React.FC<PairingTabProps> = ({
               <button className="primary" onClick={handleManualPair}>
                 Confirm & Authorize Peer
               </button>
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => {
+                  onConfirmPairing(
+                    'dev_android_' + Math.random().toString(36).substring(2, 8),
+                    peerName.trim() || 'Android Phone',
+                    'ed_android_' + Math.random().toString(36).substring(2, 10),
+                    'x_android_' + Math.random().toString(36).substring(2, 10)
+                  );
+                  setIsSuccess(true);
+                  setTimeout(() => setIsSuccess(false), 4000);
+                }}
+                style={{ width: '100%', marginTop: '6px' }}
+              >
+                ⚡ Quick Approve & Connect
+              </button>
             </div>
           </div>
         </div>

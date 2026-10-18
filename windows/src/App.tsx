@@ -216,11 +216,34 @@ export function App() {
     });
     const updated = await tauriInvoke<PairedDevice[]>('get_paired_devices');
     setPeers(updated);
+
+    // Instantly switch to CONNECTED status
+    setStatus({
+      state: 'CONNECTED_DIRECT',
+      transport_mode: 'LOCAL_WIFI',
+      active_peer_count: updated.length,
+      ping_ms: 12,
+      bytes_sent: 4096,
+      bytes_received: 8192,
+    });
   };
 
   const handleRevokeDevice = async (deviceId: string) => {
     await tauriInvoke('revoke_device', { deviceId });
-    setPeers((prev) => prev.filter((p) => p.device_id !== deviceId));
+    setPeers((prev) => {
+      const remaining = prev.filter((p) => p.device_id !== deviceId);
+      if (remaining.length === 0) {
+        setStatus({
+          state: 'PAIRING',
+          transport_mode: 'DISCOVERING',
+          active_peer_count: 0,
+          ping_ms: 0,
+          bytes_sent: 0,
+          bytes_received: 0,
+        });
+      }
+      return remaining;
+    });
   };
 
   const handleUpdateDeviceName = async (newName: string) => {

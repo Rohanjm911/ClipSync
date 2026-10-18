@@ -85,19 +85,24 @@ fun MainAppScreen() {
         mutableStateOf(prefs.getString("device_name", "Android-Pixel-84F2") ?: "Android-Pixel-84F2")
     }
 
+    val isInitiallyPaired = prefs.getBoolean("has_paired", true)
     val mockPeers = remember {
-        mutableStateListOf(
-            PairedDevice(
-                deviceId = "dev_win_desktop_9A2E",
-                deviceName = "Desktop-Win-9A2E",
-                ed25519PubKey = "ed_pub_win_001",
-                x25519PubKey = "x_pub_win_001",
-                pairedAt = System.currentTimeMillis() - 7200000,
-                lastSeen = System.currentTimeMillis() - 15000,
-                isOnline = true,
-                connectionMode = "LOCAL_WIFI"
-            )
-        )
+        mutableStateListOf<PairedDevice>().apply {
+            if (isInitiallyPaired) {
+                add(
+                    PairedDevice(
+                        deviceId = "dev_win_desktop_9A2E",
+                        deviceName = "Desktop-Win-6770",
+                        ed25519PubKey = "ed_pub_win_001",
+                        x25519PubKey = "x_pub_win_001",
+                        pairedAt = System.currentTimeMillis() - 7200000,
+                        lastSeen = System.currentTimeMillis() - 15000,
+                        isOnline = true,
+                        connectionMode = "LOCAL_WIFI"
+                    )
+                )
+            }
+        }
     }
 
     val historyItems = remember {
@@ -196,9 +201,28 @@ fun MainAppScreen() {
                 .padding(padding)
         ) {
             when (currentTab) {
-                MobileTab.DASHBOARD -> DashboardScreen(deviceName, connectionState, historyItems)
-                MobileTab.PAIRING -> PairingScreen(onPairSuccess = { peer -> mockPeers.add(peer) })
-                MobileTab.DEVICES -> DevicesScreen(mockPeers, onRevoke = { dev -> mockPeers.remove(dev) })
+                MobileTab.DASHBOARD -> DashboardScreen(
+                    deviceName = deviceName,
+                    state = connectionState,
+                    history = historyItems,
+                    isDeviceConnected = mockPeers.isNotEmpty(),
+                    peerCount = mockPeers.size
+                )
+                MobileTab.PAIRING -> PairingScreen(
+                    onPairSuccess = { peer ->
+                        mockPeers.add(peer)
+                        prefs.edit().putBoolean("has_paired", true).apply()
+                    }
+                )
+                MobileTab.DEVICES -> DevicesScreen(
+                    peers = mockPeers,
+                    onRevoke = { dev ->
+                        mockPeers.remove(dev)
+                        if (mockPeers.isEmpty()) {
+                            prefs.edit().putBoolean("has_paired", false).apply()
+                        }
+                    }
+                )
                 MobileTab.HISTORY -> HistoryScreen(historyItems, onClear = { historyItems.clear() })
                 MobileTab.SETTINGS -> SettingsScreen(
                     deviceName = deviceName,
@@ -216,7 +240,9 @@ fun MainAppScreen() {
 fun DashboardScreen(
     deviceName: String,
     state: ConnectionState,
-    history: List<ClipboardItem>
+    history: List<ClipboardItem>,
+    isDeviceConnected: Boolean,
+    peerCount: Int
 ) {
     Column(
         modifier = Modifier
@@ -258,11 +284,11 @@ fun DashboardScreen(
                     )
                     Box(
                         modifier = Modifier
-                            .background(SolidSuccess, RoundedCornerShape(4.dp))
+                            .background(if (isDeviceConnected) SolidSuccess else SolidWarning, RoundedCornerShape(4.dp))
                             .padding(horizontal = 8.dp, vertical = 3.dp)
                     ) {
                         Text(
-                            text = "CONNECTED",
+                            text = if (isDeviceConnected) "CONNECTED" else "PAIRING",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White
@@ -271,7 +297,10 @@ fun DashboardScreen(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Active Transport: Direct Local Wi-Fi (12ms RTT)",
+                    text = if (isDeviceConnected)
+                        "Active Transport: Direct Local Wi-Fi ($peerCount peer active • 12ms RTT)"
+                    else
+                        "Active Transport: mDNS Discovering (Waiting for device to pair)",
                     fontSize = 12.sp,
                     color = TextSecondaryDark
                 )

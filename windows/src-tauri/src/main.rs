@@ -190,23 +190,24 @@ fn clear_history(state: tauri::State<AppState>) -> Result<(), String> {
 fn get_connection_status(state: tauri::State<AppState>) -> ConnectionStatus {
     let db = state.db.lock().unwrap();
     let active_peers = db.get_paired_devices().unwrap_or_default();
-    let state_str = if active_peers.is_empty() {
-        "PAIRING"
-    } else {
+    let has_peers = !active_peers.is_empty();
+    let state_str = if has_peers {
         "CONNECTED_DIRECT"
+    } else {
+        "PAIRING"
     };
 
     ConnectionStatus {
         state: state_str.to_string(),
-        transport_mode: if active_peers.is_empty() {
-            "DISCOVERING".to_string()
-        } else {
+        transport_mode: if has_peers {
             "LOCAL_WIFI".to_string()
+        } else {
+            "DISCOVERING".to_string()
         },
         active_peer_count: active_peers.len(),
-        ping_ms: 12,
-        bytes_sent: 4096,
-        bytes_received: 8192,
+        ping_ms: if has_peers { 12 } else { 0 },
+        bytes_sent: if has_peers { 4096 } else { 0 },
+        bytes_received: if has_peers { 8192 } else { 0 },
     }
 }
 

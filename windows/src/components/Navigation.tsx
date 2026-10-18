@@ -24,10 +24,13 @@ export const Navigation: React.FC<NavigationProps> = ({
   status,
   deviceName,
 }) => {
+  const isConnected = status.state === 'CONNECTED_DIRECT' || status.state === 'CONNECTED_RELAY' || status.active_peer_count > 0;
+
   const getStatusDotColor = () => {
+    if (isConnected) {
+      return 'var(--status-success)';
+    }
     switch (status.state) {
-      case 'CONNECTED_DIRECT':
-        return 'var(--status-success)';
       case 'CONNECTED_RELAY':
         return 'var(--status-warning)';
       case 'ERROR':
@@ -97,8 +100,14 @@ export const Navigation: React.FC<NavigationProps> = ({
               backgroundColor: getStatusDotColor(),
               display: 'inline-block',
             }} />
-            <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
-              {status.state} ({status.transport_mode})
+            <span style={{
+              fontSize: '11px',
+              fontWeight: isConnected ? 600 : 400,
+              color: isConnected ? 'var(--status-success)' : 'var(--text-secondary)',
+            }}>
+              {isConnected
+                ? `CONNECTED (${status.transport_mode === 'DISCOVERING' ? 'LOCAL_WIFI' : status.transport_mode})`
+                : `${status.state} (${status.transport_mode})`}
             </span>
           </div>
         </div>
