@@ -1,0 +1,13 @@
+{
+  "name": "@clipsync/relay",
+  "version": "0.1.0",
+  "description": "ClipSync zero-knowledge encrypted relay server",
+  "main": "relay.js",
+  "scripts": {
+    "start": "node relay.js",
+    "test": "node --test test/relay.test.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

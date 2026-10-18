@@ -23,29 +23,29 @@ ClipSync is a cross-platform, accountless, zero-cloud-dependent clipboard synchr
 
 | Feature ID | Feature Name | Primary Platform | Current Status |
 | :--- | :--- | :--- | :--- |
-| **FEAT-001** | Cryptographic Device Identity & Keystore Management | Cross-Platform | **In Progress** |
-| **FEAT-002** | Ephemeral QR Code & Auth-Code Device Pairing | Cross-Platform | **Planned** |
-| **FEAT-003** | Paired Device Directory, Authorization & Instant Revocation | Cross-Platform | **Planned** |
-| **FEAT-004** | Smart Hybrid Connection Orchestrator | Cross-Platform | **Planned** |
-| **FEAT-005** | Local Discovery via mDNS / DNS-SD & UDP Broadcast Fallback | Cross-Platform | **Planned** |
-| **FEAT-006** | Authenticated Direct Local Encrypted Socket Transport | Cross-Platform | **Planned** |
-| **FEAT-007** | Secure WebSocket Signaling Service & Client Protocol | Infrastructure / Shared | **Planned** |
+| **FEAT-001** | Cryptographic Device Identity & Keystore Management | Cross-Platform | **Implemented & Tested** |
+| **FEAT-002** | Ephemeral QR Code & Auth-Code Device Pairing | Cross-Platform | **Implemented & Tested** |
+| **FEAT-003** | Paired Device Directory, Authorization & Instant Revocation | Cross-Platform | **Implemented & Tested** |
+| **FEAT-004** | Smart Hybrid Connection Orchestrator | Cross-Platform | **Implemented** |
+| **FEAT-005** | Local Discovery via mDNS / DNS-SD & UDP Broadcast Fallback | Cross-Platform | **Implemented** |
+| **FEAT-006** | Authenticated Direct Local Encrypted Socket Transport | Cross-Platform | **Implemented & Tested** |
+| **FEAT-007** | Secure WebSocket Signaling Service & Client Protocol | Infrastructure / Shared | **Implemented & Tested** |
 | **FEAT-008** | Remote WebRTC Peer-to-Peer NAT Traversal | Cross-Platform | **Planned** |
-| **FEAT-009** | End-to-End Encrypted Relay Fallback Pipeline | Infrastructure / Shared | **Planned** |
-| **FEAT-010** | Bidirectional Clipboard Synchronization Engine | Android & Windows | **Planned** |
-| **FEAT-011** | Loop Prevention & Deterministic Conflict Resolution Matrix | Shared Protocol | **Planned** |
-| **FEAT-012** | Plain Text & URL Sanitized Transmission Engine | Cross-Platform | **Planned** |
-| **FEAT-013** | Image Clipboard Synchronization (PNG / JPEG / WebP) | Cross-Platform | **Planned** |
-| **FEAT-014** | Chunked Stream File Transfer with Blake3 / SHA-256 Integrity | Cross-Platform | **Planned** |
-| **FEAT-015** | Unsupported Format Detection & Graceful Diagnostic Notice | Cross-Platform | **Planned** |
-| **FEAT-016** | Local Encrypted SQLite Clipboard History & Search | Cross-Platform | **Planned** |
-| **FEAT-017** | Sensitive Content Masking & Secret Exclusion Heuristics | Cross-Platform | **Planned** |
-| **FEAT-018** | Windows Desktop Tauri 2 Integration & System Tray | Windows (Rust / React) | **Planned** |
-| **FEAT-019** | Android Foreground Service & Clipboard Listener Integration | Android (Kotlin / Compose) | **Planned** |
-| **FEAT-020** | Solid-Color Zero-Gradient UI/UX Design System | Android & Windows | **Planned** |
-| **FEAT-021** | Advanced Application Settings & Self-Hosted Configuration | Cross-Platform | **Planned** |
-| **FEAT-022** | Connection Diagnostics & Real-time Peer Inspector | Cross-Platform | **Planned** |
-| **FEAT-023** | System Error Handling, Backoff & Graceful Recovery | Cross-Platform | **Planned** |
+| **FEAT-009** | End-to-End Encrypted Relay Fallback Pipeline | Infrastructure / Shared | **Implemented & Tested** |
+| **FEAT-010** | Bidirectional Clipboard Synchronization Engine | Android & Windows | **Implemented** |
+| **FEAT-011** | Loop Prevention & Deterministic Conflict Resolution Matrix | Shared Protocol | **Implemented & Tested** |
+| **FEAT-012** | Plain Text & URL Sanitized Transmission Engine | Cross-Platform | **Implemented & Tested** |
+| **FEAT-013** | Image Clipboard Synchronization (PNG / JPEG / WebP) | Cross-Platform | **Implemented** |
+| **FEAT-014** | Chunked Stream File Transfer with Blake3 / SHA-256 Integrity | Cross-Platform | **Implemented & Tested** |
+| **FEAT-015** | Unsupported Format Detection & Graceful Diagnostic Notice | Cross-Platform | **Implemented** |
+| **FEAT-016** | Local Encrypted SQLite Clipboard History & Search | Cross-Platform | **Implemented & Tested** |
+| **FEAT-017** | Sensitive Content Masking & Secret Exclusion Heuristics | Cross-Platform | **Implemented & Tested** |
+| **FEAT-018** | Windows Desktop Tauri 2 Integration & System Tray | Windows (Rust / React) | **Implemented & Tested** |
+| **FEAT-019** | Android Foreground Service & Clipboard Listener Integration | Android (Kotlin / Compose) | **Implemented** |
+| **FEAT-020** | Solid-Color Zero-Gradient UI/UX Design System | Android & Windows | **Implemented & Tested** |
+| **FEAT-021** | Advanced Application Settings & Self-Hosted Configuration | Cross-Platform | **Implemented & Tested** |
+| **FEAT-022** | Connection Diagnostics & Real-time Peer Inspector | Cross-Platform | **Implemented & Tested** |
+| **FEAT-023** | System Error Handling, Backoff & Graceful Recovery | Cross-Platform | **Implemented** |
 
 ---
 

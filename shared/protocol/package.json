@@ -1,0 +1,12 @@
+{
+  "name": "@clipsync/protocol",
+  "version": "0.1.0",
+  "description": "ClipSync shared wire protocol, message schemas, and cryptographic validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test test/protocol.test.js"
+  },
+  "keywords": ["clipboard", "sync", "protocol", "e2ee"],
+  "author": "ClipSync Team",
+  "license": "MIT"
+}

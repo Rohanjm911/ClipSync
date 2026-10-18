@@ -1,0 +1,126 @@
+/* ClipSync Strict Solid-Color Design System (Zero Gradients Rule) */
+:root {
+  --bg-primary: #121212;
+  --bg-surface: #1E1E1E;
+  --bg-surface-elevated: #282828;
+  --bg-hover: #323232;
+  --bg-active: #3C3C3C;
+
+  --border-subtle: #2C2C2C;
+  --border-strong: #3F3F46;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+
+  --accent-primary: #2563EB; /* Solid Cobalt Blue */
+  --accent-hover: #1D4ED8;
+  --accent-active: #1E40AF;
+
+  --status-success: #16A34A; /* Solid Green */
+  --status-warning: #CA8A04; /* Solid Amber */
+  --status-error: #DC2626;   /* Solid Red */
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  user-select: none;
+  overflow: hidden;
+}
+
+button {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button.primary {
+  background-color: var(--accent-primary);
+  color: #FFFFFF;
+  border: 1px solid var(--accent-primary);
+}
+
+button.primary:hover {
+  background-color: var(--accent-hover);
+}
+
+button.primary:active {
+  background-color: var(--accent-active);
+}
+
+button.secondary {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+button.secondary:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+button.danger {
+  background-color: var(--status-error);
+  color: #FFFFFF;
+  border: 1px solid var(--status-error);
+}
+
+button.danger:hover {
+  background-color: #B91C1C;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 13px;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent-primary);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525B;
+}
