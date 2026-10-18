@@ -62,20 +62,16 @@ export const Navigation: React.FC<NavigationProps> = ({
         borderBottom: '1px solid var(--border-subtle)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: '28px',
-            height: '28px',
-            backgroundColor: 'var(--accent-primary)',
-            borderRadius: 'var(--radius-sm)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 700,
-            fontSize: '15px',
-            color: '#FFFFFF',
-          }}>
-            CS
-          </div>
+          <img
+            src="/logo.png"
+            alt="ClipSync Logo"
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: 'var(--radius-sm)',
+              objectFit: 'contain',
+            }}
+          />
           <div>
             <div style={{ fontSize: '15px', fontWeight: 600, letterSpacing: '-0.2px' }}>ClipSync</div>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Windows Desktop</div>
