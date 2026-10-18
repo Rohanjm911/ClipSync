@@ -75,7 +75,7 @@ class ClipboardSyncService : Service() {
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
-            Intent.newIntent(this, MainActivity::class.java),
+            Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_IMMUTABLE
         )
 
