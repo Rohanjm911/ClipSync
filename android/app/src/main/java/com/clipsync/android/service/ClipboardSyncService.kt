@@ -3,12 +3,14 @@ package com.clipsync.android.service
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
-import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
+import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import com.clipsync.android.ClipSyncApp
 import com.clipsync.android.MainActivity
 import com.clipsync.android.protocol.ProtocolEngine
@@ -26,49 +28,74 @@ class ClipboardSyncService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboardManager.addPrimaryClipChangedListener(clipListener)
+        try {
+            val cm = getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+            if (cm != null) {
+                clipboardManager = cm
+                clipboardManager.addPrimaryClipChangedListener(clipListener)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("ClipboardSyncService", "Failed to register clipListener: ${e.message}", e)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val notification = createNotification()
-        startForeground(1001, notification)
+        try {
+            val notification = createNotification()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ServiceCompat.startForeground(
+                    this,
+                    1001,
+                    notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                )
+            } else {
+                startForeground(1001, notification)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("ClipboardSyncService", "startForeground failed: ${e.message}", e)
+        }
         return START_STICKY
     }
 
     private fun handleClipboardChange() {
-        val clip = clipboardManager.primaryClip ?: return
-        if (clip.itemCount == 0) return
+        try {
+            if (!::clipboardManager.isInitialized) return
+            val clip = clipboardManager.primaryClip ?: return
+            if (clip.itemCount == 0) return
 
-        val item = clip.getItemAt(0)
-        val text = item.text?.toString() ?: return
+            val item = clip.getItemAt(0)
+            val text = item.text?.toString() ?: return
 
-        // 1. Loop Prevention check: ignore if within programmatic paste suppression window
-        val now = System.currentTimeMillis()
-        if (now - lastSyncTimestamp < suppressionWindowMs) {
-            return
+            // 1. Loop Prevention check: ignore if within programmatic paste suppression window
+            val now = System.currentTimeMillis()
+            if (now - lastSyncTimestamp < suppressionWindowMs) {
+                return
+            }
+
+            // 2. Hash comparison: ignore if identical to last synced payload
+            val contentHash = ProtocolEngine.sha256(text)
+            if (contentHash == lastSyncedHash) {
+                return
+            }
+
+            // 3. Sensitive Content Check
+            val isSensitive = ProtocolEngine.isSensitiveContent(text)
+
+            // Update local tracking
+            lastSyncedHash = contentHash
+            lastSyncTimestamp = now
+
+            // Broadcast to application listeners (without logging secret payload content)
+            val syncIntent = Intent("com.clipsync.CLIPBOARD_CHANGED").apply {
+                putExtra("content_hash", contentHash)
+                putExtra("is_sensitive", isSensitive)
+                putExtra("length", text.length)
+            }
+            sendBroadcast(syncIntent)
+        } catch (e: Exception) {
+            android.util.Log.e("ClipboardSyncService", "Error handling clipboard change: ${e.message}", e)
         }
-
-        // 2. Hash comparison: ignore if identical to last synced payload
-        val contentHash = ProtocolEngine.sha256(text)
-        if (contentHash == lastSyncedHash) {
-            return
-        }
-
-        // 3. Sensitive Content Check
-        val isSensitive = ProtocolEngine.isSensitiveContent(text)
-
-        // Update local tracking
-        lastSyncedHash = contentHash
-        lastSyncTimestamp = now
-
-        // Broadcast to application listeners (without logging secret payload content)
-        val syncIntent = Intent("com.clipsync.CLIPBOARD_CHANGED").apply {
-            putExtra("content_hash", contentHash)
-            putExtra("is_sensitive", isSensitive)
-            putExtra("length", text.length)
-        }
-        sendBroadcast(syncIntent)
     }
 
     private fun createNotification(): Notification {
@@ -91,7 +118,13 @@ class ClipboardSyncService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        clipboardManager.removePrimaryClipChangedListener(clipListener)
+        try {
+            if (::clipboardManager.isInitialized) {
+                clipboardManager.removePrimaryClipChangedListener(clipListener)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("ClipboardSyncService", "Failed to remove clipListener: ${e.message}", e)
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? = null

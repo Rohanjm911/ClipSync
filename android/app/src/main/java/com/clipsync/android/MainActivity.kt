@@ -1,9 +1,12 @@
 package com.clipsync.android
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,11 +31,33 @@ import com.clipsync.android.ui.theme.*
 
 class MainActivity : ComponentActivity() {
 
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { _ ->
+        // Permission result handled
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Start Foreground Service for clipboard monitoring
-        startForegroundService(Intent(this, ClipboardSyncService::class.java))
+        // Request POST_NOTIFICATIONS on Android 13+ (API 33+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+        // Safely start Foreground Service for clipboard monitoring
+        try {
+            val serviceIntent = Intent(this, ClipboardSyncService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent)
+            } else {
+                startService(serviceIntent)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("ClipSync", "Could not start ClipboardSyncService: ${e.message}", e)
+        }
 
         setContent {
             ClipSyncTheme {
@@ -527,7 +552,7 @@ fun SettingsScreen() {
                 Text(text = "Network Mode: Smart Hybrid", fontWeight = FontWeight.SemiBold, color = Color.White, fontSize = 14.sp)
                 Text(text = "Prefers direct local Wi-Fi; uses WebRTC P2P when outside home network.", fontSize = 12.sp, color = TextSecondaryDark, modifier = Modifier.padding(top = 2.dp, bottom = 14.dp))
 
-                Divider(color = SolidBorderDark)
+                HorizontalDivider(color = SolidBorderDark)
 
                 Spacer(modifier = Modifier.height(14.dp))
                 Text(text = "Privacy: Secret Filtering Active", fontWeight = FontWeight.SemiBold, color = Color.White, fontSize = 14.sp)

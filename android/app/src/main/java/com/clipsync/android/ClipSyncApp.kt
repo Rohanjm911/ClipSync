@@ -18,26 +18,30 @@ class ClipSyncApp : Application() {
     }
 
     private fun createNotificationChannels() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val syncChannel = NotificationChannel(
-                SYNC_CHANNEL_ID,
-                "ClipSync Active Service",
-                NotificationManager.IMPORTANCE_LOW
-            ).apply {
-                description = "Maintains connection with paired ClipSync devices"
-            }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val syncChannel = NotificationChannel(
+                    SYNC_CHANNEL_ID,
+                    "ClipSync Active Service",
+                    NotificationManager.IMPORTANCE_LOW
+                ).apply {
+                    description = "Maintains connection with paired ClipSync devices"
+                }
 
-            val alertChannel = NotificationChannel(
-                ALERT_CHANNEL_ID,
-                "ClipSync Alerts",
-                NotificationManager.IMPORTANCE_DEFAULT
-            ).apply {
-                description = "Notifications for incoming files and pairing requests"
-            }
+                val alertChannel = NotificationChannel(
+                    ALERT_CHANNEL_ID,
+                    "ClipSync Alerts",
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply {
+                    description = "Notifications for incoming files and pairing requests"
+                }
 
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(syncChannel)
-            manager.createNotificationChannel(alertChannel)
+                val manager = getSystemService(NotificationManager::class.java)
+                manager?.createNotificationChannel(syncChannel)
+                manager?.createNotificationChannel(alertChannel)
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("ClipSyncApp", "Could not create notification channels: ${e.message}", e)
         }
     }
 }
