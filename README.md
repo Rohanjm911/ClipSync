@@ -46,14 +46,50 @@
 
 ---
 
-## 🚀 Pre-Built Deliverables
+## 📦 Application Locations & Pre-Built Binaries
 
-Pre-compiled production binaries are built and ready for immediate execution:
+Both the **Windows PC Desktop Executable** and the **Android Phone APK** have been compiled, verified, and are ready to run directly from the workspace:
 
-| Platform | Deliverable | Location | Size | Execution Guide |
+### 🖥️ 1. Windows PC Application (`.exe`)
+* **File Name:** `clipsync-desktop.exe`
+* **File Size:** `24.6 MB` (`24,689,664 bytes`)
+* **Relative Path:** [`windows/src-tauri/target/release/clipsync-desktop.exe`](windows/src-tauri/target/release/clipsync-desktop.exe)
+* **Absolute Path:**
+  ```text
+  D:\projects and certificates\projects\uilities and others\ClipShare\windows\src-tauri\target\release\clipsync-desktop.exe
+  ```
+* **How to Run on Windows:**
+  - Double-click `clipsync-desktop.exe` in File Explorer, or
+  - Run via PowerShell:
+    ```powershell
+    .\windows\src-tauri\target\release\clipsync-desktop.exe
+    ```
+
+---
+
+### 📱 2. Android Phone Application (`.apk`)
+* **File Name:** `app-debug.apk`
+* **File Size:** `15.6 MB` (`15,652,491 bytes`)
+* **Relative Path:** [`android/app/build/outputs/apk/debug/app-debug.apk`](android/app/build/outputs/apk/debug/app-debug.apk)
+* **Absolute Path:**
+  ```text
+  D:\projects and certificates\projects\uilities and others\ClipShare\android\app\build\outputs\apk\debug\app-debug.apk
+  ```
+* **How to Install on Phone:**
+  - **Via USB / Storage:** Copy `app-debug.apk` to your phone via USB cable, Google Drive, or local share, and tap to install (enable *Install unknown apps* if prompted).
+  - **Via ADB Command Line:**
+    ```powershell
+    adb install "android\app\build\outputs\apk\debug\app-debug.apk"
+    ```
+
+---
+
+### 📊 Deliverables Quick Reference
+
+| Target Platform | Package Format | Relative Location | Exact File Size | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| **Windows Desktop** | Standalone `.exe` | [`windows/src-tauri/target/release/clipsync-desktop.exe`](windows/src-tauri/target/release/clipsync-desktop.exe) | **24.6 MB** | Double-click to run or launch via PowerShell: `.\windows\src-tauri\target\release\clipsync-desktop.exe` |
-| **Android Mobile** | Debug Package `.apk` | [`android/app/build/outputs/apk/debug/app-debug.apk`](android/app/build/outputs/apk/debug/app-debug.apk) | **15.6 MB** | Install via ADB: `adb install android/app/build/outputs/apk/debug/app-debug.apk` or copy to device |
+| **Windows PC** | Executable (`.exe`) | `windows/src-tauri/target/release/clipsync-desktop.exe` | **24.6 MB** | ✅ Ready & Verified |
+| **Android Phone** | Package (`.apk`) | `android/app/build/outputs/apk/debug/app-debug.apk` | **15.6 MB** | ✅ Ready & Verified |
 
 ---
 
