@@ -10,13 +10,21 @@ target/
 **/*.rs.bk
 Cargo.lock.backup
 
-# Android build artifacts
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Android & Flutter build artifacts
 .gradle/
 build/
+flutter_app/build/
+flutter_app/.dart_tool/
 android/app/build/
 android/.gradle/
 local.properties
 *.apk
+!clipsync-android.apk
 *.aab
 *.dex
 

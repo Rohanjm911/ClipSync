@@ -1,246 +1,213 @@
-# 📋 ClipSync
-
 <div align="center">
 
-**Copy Anywhere. Paste Everywhere.**  
-*An accountless, zero-cloud clipboard synchronization & file transfer application connecting Android and Windows with end-to-end encryption.*
+  <img src="assets/logo.png" alt="ClipSync Logo" width="128" style="border-radius: 24px; margin-bottom: 12px; box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);" />
 
-[![Version](https://img.shields.io/badge/Version-0.1.0--alpha-111111?style=flat-square)](CHANGELOG.md)
-[![License](https://img.shields.io/badge/License-MIT-0969DA?style=flat-square)](LICENSE)
-[![Zero Gradients](https://img.shields.io/badge/Design-Zero_Gradients-1F2328?style=flat-square)](docs/ARCHITECTURE.md#zero-gradients-rule)
-[![Tests Passing](https://img.shields.io/badge/Tests-26%2F26_Passing-1A7F37?style=flat-square)](docs/TESTING.md)
-[![Security](https://img.shields.io/badge/E2EE-ChaCha20--Poly1305_%7C_Ed25519-8250DF?style=flat-square)](docs/SECURITY.md)
+  # 📋 ClipSync
 
-<p align="center">
-  <img src="assets/clipsync-banner.jpg" alt="ClipSync Cross-Platform Clipboard Synchronization Banner" width="100%" style="border-radius: 8px; border: 1px solid #30363D;" />
-</p>
+  **Copy Anywhere. Paste Everywhere.**  
+  *Zero-cloud, accountless, real-time clipboard synchronization connecting Windows PC and Android with End-to-End Encryption (E2EE).*
+
+  [![Version](https://img.shields.io/badge/Version-0.1.0--release-0B0F19?style=flat-square)](CHANGELOG.md)
+  [![License](https://img.shields.io/badge/License-MIT-6366F1?style=flat-square)](LICENSE)
+  [![Design System](https://img.shields.io/badge/Design-Cyber_Obsidian_Glass-06B6D4?style=flat-square)](#-cyber-obsidian-glassmorphism-ui)
+  [![Tests Passing](https://img.shields.io/badge/Tests-All_Passing-10B981?style=flat-square)](docs/TESTING.md)
+  [![Security](https://img.shields.io/badge/E2EE-ChaCha20--Poly1305_%7C_Ed25519-8250DF?style=flat-square)](docs/SECURITY.md)
+
+  <br/><br/>
+
+  <p align="center">
+    <img src="assets/clipsync-banner.jpg" alt="ClipSync Cross-Platform Clipboard Synchronization Banner" width="100%" style="border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);" />
+  </p>
 
 </div>
 
 ---
 
-## ⚡ Real-World Tech Stack
+## ⚡ Quick Start: Ready-to-Run Binaries (Root Folder)
 
-### 🖥️ Windows Desktop Engine
-| Technology | Badge | Role |
-| :--- | :--- | :--- |
-| **Rust** | ![Rust](https://img.shields.io/badge/Rust_1.98+-000000?style=for-the-badge&logo=rust&logoColor=white) | Core native systems engine, low-level OS clipboard monitoring, native tray, and crypto |
-| **Tauri 2** | ![Tauri](https://img.shields.io/badge/Tauri_2.0-24C8D8?style=for-the-badge&logo=tauri&logoColor=white) | Ultra-lightweight native window host, secure IPC bridge, and Windows system integration |
-| **React 18** | ![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) | Reactive desktop UI components, real-time dashboard, and history manager |
-| **TypeScript** | ![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=for-the-badge&logo=typescript&logoColor=white) | Strict type safety across UI states, protocol serialization, and IPC commands |
-| **Vite** | ![Vite](https://img.shields.io/badge/Vite_6-646CFF?style=for-the-badge&logo=vite&logoColor=white) | Instant lightning-fast HMR and optimized desktop frontend bundling |
-| **SQLite** | ![SQLite](https://img.shields.io/badge/SQLite_3-003B57?style=for-the-badge&logo=sqlite&logoColor=white) | High-performance embedded local database for paired devices, keys, and clipboard history |
+No setup or compilation is required to start syncing! The pre-built release binaries are available directly in the root directory:
 
-### 📱 Android Mobile Application
-| Technology | Badge | Role |
-| :--- | :--- | :--- |
-| **Android SDK** | ![Android](https://img.shields.io/badge/Android_14+(API_34)-3DDC84?style=for-the-badge&logo=android&logoColor=white) | Native mobile target with modern background foreground services and notification channels |
-| **Kotlin** | ![Kotlin](https://img.shields.io/badge/Kotlin_1.9-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white) | Modern language implementation for Android protocol, crypto, and coroutine streams |
-| **Jetpack Compose** | ![Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white) | Declarative UI following the strict Zero-Gradients design system |
-| **CameraX** | ![CameraX](https://img.shields.io/badge/CameraX-0F9D58?style=for-the-badge&logo=google&logoColor=white) | High-speed QR code pairing scanning and camera stream analysis |
-| **Google Tink** | ![Tink](https://img.shields.io/badge/Google_Tink-4285F4?style=for-the-badge&logo=google&logoColor=white) | Hardware-backed cryptographic primitives, KeyStore management, and AEAD encryption |
-
-### 🌐 Protocol & Self-Hosted Infrastructure
-| Technology | Badge | Role |
-| :--- | :--- | :--- |
-| **WebRTC** | ![WebRTC](https://img.shields.io/badge/WebRTC_P2P-333333?style=for-the-badge&logo=webrtc&logoColor=white) | Peer-to-peer data channels for seamless cross-network sync without port forwarding |
-| **Node.js** | ![NodeJS](https://img.shields.io/badge/Node.js_20+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) | Reference cross-platform protocol implementation, unit tests, and microservices |
-| **WebSocket** | ![WebSocket](https://img.shields.io/badge/WebSockets-010101?style=for-the-badge&logo=socketdotio&logoColor=white) | Real-time low-latency signaling session exchange and binary relay pipes |
-| **Docker** | ![Docker](https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white) | One-command self-hosted zero-knowledge signaling and relay forwarder deployment |
+| Platform | Binary | Size | Instructions |
+| :--- | :--- | :--- | :--- |
+| **Windows PC** | [`clipsync-desktop.exe`](./clipsync-desktop.exe) | `~42.1 MB` | Double-click to launch (runs in system tray/desktop) |
+| **Android Phone** | [`clipsync-android.apk`](./clipsync-android.apk) | `~51.4 MB` | Transfer to phone & install (or run `adb install clipsync-android.apk`) |
 
 ---
 
-## 📦 Application Locations & Pre-Built Binaries
+## 🌟 Highlights & Key Features
 
-Both the **Windows PC Desktop Executable** and the **Android Phone APK** have been compiled, verified, and are ready to run directly from the workspace:
+### 🚀 First-Launch Device Naming & Zero-Trust Out-of-the-Box
+- **First-Time Setup Ceremony:** Opening the app for the first time presents an interactive naming dialog with one-tap device presets (*"Work Laptop"*, *"Gaming PC"*, *"Pixel Phone"*, *"Galaxy Phone"*) or custom entry.
+- **Zero Pre-Seeded Companion Devices:** Starts with zero paired devices (`activePeerCount: 0`) in an authenticated zero-trust state.
+- **Pristine Empty Clipboard History:** Starts with a 100% clean, empty clipboard feed. Entries only populate in real time when you copy or sync.
 
-### 🖥️ 1. Windows PC Application (`.exe`)
-* **File Name:** `clipsync-desktop.exe`
-* **File Size:** `24.6 MB` (`24,689,664 bytes`)
-* **Relative Path:** [`windows/src-tauri/target/release/clipsync-desktop.exe`](windows/src-tauri/target/release/clipsync-desktop.exe)
-* **Absolute Path:**
-  ```text
-  D:\projects and certificates\projects\uilities and others\ClipShare\windows\src-tauri\target\release\clipsync-desktop.exe
-  ```
-* **How to Run on Windows:**
-  - Double-click `clipsync-desktop.exe` in File Explorer, or
-  - Run via PowerShell:
-    ```powershell
-    .\windows\src-tauri\target\release\clipsync-desktop.exe
-    ```
+### 🔄 True Real-Time Background Sync (<250ms)
+- **Zero-Click Workflow:** When you copy on Windows, it is automatically available to paste on Android within 250ms, and vice-versa.
+- **Echo Prevention:** Cryptographic SHA-256 loop suppression ensures your device never bounces its own copied text back in an infinite loop.
 
----
+### 🔵 Offline Bluetooth Direct Sync (No Wi-Fi / Router Required!)
+- **Dedicated Bluetooth Hub:** Toggle Bluetooth Sync on/off directly from the Dashboard or Settings.
+- **Bluetooth Quick Action Button:** Dedicated **[🔵 Bluetooth Sync]** button in the broadcast console alongside standard LAN broadcast.
+- **Bluetooth PAN Subnet Support:** Pre-configured companion presets (`192.168.44.1`, `192.168.44.2`, `172.20.10.1`) for seamless zero-router offline sync between Windows & Android over Bluetooth PAN/Tethering.
+- **Dedicated Bluetooth Pairing Tab:** Switch between QR-Code pairing and Bluetooth Direct Pairing in the Pairing Ceremony view with built-in connection ping testing.
 
-### 📱 2. Android Phone Application (`.apk`)
-* **File Name:** `app-debug.apk`
-* **File Size:** `15.6 MB` (`15,652,491 bytes`)
-* **Relative Path:** [`android/app/build/outputs/apk/debug/app-debug.apk`](android/app/build/outputs/apk/debug/app-debug.apk)
-* **Absolute Path:**
-  ```text
-  D:\projects and certificates\projects\uilities and others\ClipShare\android\app\build\outputs\apk\debug\app-debug.apk
-  ```
-* **How to Install on Phone:**
-  - **Via USB / Storage:** Copy `app-debug.apk` to your phone via USB cable, Google Drive, or local share, and tap to install (enable *Install unknown apps* if prompted).
-  - **Via ADB Command Line:**
-    ```powershell
-    adb install "android\app\build\outputs\apk\debug\app-debug.apk"
-    ```
+### 🏷️ Independent Device Customization & Controls
+- **Custom Device Names:** Easily rename your devices in **Settings** (e.g., *"Rohan's Gaming PC"*, *"Galaxy S23 Ultra"*).
+- **Per-Device Sync Toggle:** Instantly pause or resume clipboard synchronization anytime without unpairing.
+- **Device Distinction:** Clear device badging distinguishes whether an entry originated from a PC, Android, or local action.
+
+### 🎨 Cyber Obsidian Glassmorphism UI
+- **Futuristic Palette:** Deep frosted obsidian backgrounds (`#0B0F19` & `#111827`) with translucent glass card borders.
+- **Vibrant Accents:** Electric indigo (`#6366F1`) and sky cyan (`#38BDF8`) micro-glows.
+- **Zero Overflow Guarantee:** Dynamic responsive layout tested across mobile screens down to 320px width.
+
+### 🗂️ Rich Content Preview Cards
+ClipSync's smart parser automatically formats distinct types of clipboard data:
+- 🎨 **Color Swatches:** Hex (`#2563EB`, `#FF5733`) and RGB values render live color chips, glows, and RGB breakdown badges.
+- 🌐 **Web Links:** Detects URLs (`http://`, `https://`) and formats them with domain pills (e.g., `github.com`) and quick open buttons.
+- 💻 **Code & Shell Commands:** Formats CLI commands (`git`, `docker`, `curl`, `flutter`, `cargo`) and JSON payloads inside a dark terminal block with macOS window controls.
+- 🔒 **Masked Sensitive Secrets:** Automatically detects API keys, tokens, and passwords, securely masking them with one-tap reveal/hide controls.
 
 ---
 
-### 📊 Deliverables Quick Reference
+## 📶 How to Connect Your Devices
 
-| Target Platform | Package Format | Relative Location | Exact File Size | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **Windows PC** | Executable (`.exe`) | `windows/src-tauri/target/release/clipsync-desktop.exe` | **24.6 MB** | ✅ Ready & Verified |
-| **Android Phone** | Package (`.apk`) | `android/app/build/outputs/apk/debug/app-debug.apk` | **15.6 MB** | ✅ Ready & Verified |
+### Method 1: Local Wi-Fi (Recommended - Fastest)
+1. Ensure both your PC and phone are connected to the same Wi-Fi network or hotspot.
+2. Open **ClipSync** on both devices.
+3. On your phone, go to **Settings** $\rightarrow$ note the **My Local IP** (e.g. `192.168.1.15:48901`).
+4. On your PC, enter that IP into the **Companion Device IP** field and click **Test Ping**.
+5. Once verified, simply copy anything on one device — it immediately syncs to the other!
+
+### Method 2: Bluetooth Direct Sync (Offline / No Wi-Fi)
+1. **Pair OS Bluetooth:** Pair your Android phone with your Windows PC once via Windows **Bluetooth & Devices** settings.
+2. **Enable Tethering / PAN:**
+   - On Android: Turn on **Bluetooth Tethering** (*Settings $\rightarrow$ Network & Internet $\rightarrow$ Hotspot & Tethering $\rightarrow$ Bluetooth Tethering*).
+   - On Windows: In Bluetooth & Devices, click on your phone $\rightarrow$ **Connect using $\rightarrow$ Access point (Personal Area Network)**.
+3. **Bluetooth Direct Pairing Tab:** In ClipSync, go to **Pairing Ceremony** $\rightarrow$ switch to the **🔵 Bluetooth Direct Pairing** tab.
+4. **Quick Presets & Ping Test:** Select the preset chip (`192.168.44.1` for Android Gateway, `192.168.44.2` for PC) and click **"Test Bluetooth Link"**.
+5. **Sync Directly:** Toggle on **Bluetooth Direct Sync Hub** on the Dashboard, or tap the dedicated **[🔵 Bluetooth Sync]** button in the broadcast box. ClipSync routes encrypted payloads over the offline Bluetooth PAN socket without needing any Wi-Fi router or internet access!
 
 ---
 
 ## 🔒 Security & Privacy Architecture
 
+ClipSync adheres to a strict zero-cloud, privacy-first design:
+
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Alice as Windows Desktop
+    actor Alice as Windows PC
     actor Bob as Android Phone
-    Note over Alice,Bob: Accountless Trust: Device Keypairs (Ed25519 & X25519)
-    Alice->>Bob: Displays QR Code (Device ID, X25519 PubKey, Ephemeral Token, Nonce)
-    Bob->>Alice: Scans QR & Sends Pairing Request with Signed Handshake
-    Note over Alice,Bob: Both derive 6-Digit Short Authentication String (SAS)
+    Note over Alice,Bob: Zero-Cloud Key Generation (Ed25519 & X25519)
+    Alice->>Bob: Displays Ephemeral QR (Device ID, X25519 PubKey, Nonce)
+    Bob->>Alice: Scans QR & Sends Signed Handshake
+    Note over Alice,Bob: Both compute 6-Digit Short Authentication String (SAS)
     Alice->>Alice: User confirms SAS code: "849 201"
     Bob->>Bob: User confirms SAS code: "849 201"
-    Note over Alice,Bob: Mutual Trust Established (Stored locally in SQLite / KeyStore)
-    Alice->>Bob: E2EE Sync (ChaCha20-Poly1305 + Monotonic Event ID + HMAC-SHA256)
+    Note over Alice,Bob: Mutual Cryptographic Trust Established
+    Alice->>Bob: E2EE Sync Payload (ChaCha20-Poly1305 + Counter + SHA-256)
 ```
 
-1. **Zero-Cloud & Accountless:** No email, phone number, password, or third-party servers required. Every device generates an Ed25519 signing keypair and X25519 ECDH keypair stored in the OS-protected local store.
-2. **Visual QR Pairing with SAS Verification:** Devices establish mutual trust by scanning a visual pairing QR code. A 6-digit Short Authentication String (SAS) is derived via HKDF to guarantee protection against Man-in-the-Middle (MitM) attacks.
-3. **End-to-End Encryption (E2EE):** All clipboard payloads (text, images, files) are encrypted using **ChaCha20-Poly1305 AEAD** with unique 96-bit nonces. Relays and signaling servers only see opaque binary blobs.
-4. **Sensitive Data Filtering:** Automatically detects and marks sensitive clipboard items (Private Keys, API Tokens, Credit Cards with Luhn validation) so they require manual user confirmation before syncing.
-5. **Instant One-Click Revocation:** Revoking a paired device locally purges its public key and immediately terminates all active channels.
+- **Zero Cloud & Zero Accounts:** No accounts, logins, phone numbers, or third-party servers. All data stays strictly on your local network.
+- **End-to-End Encryption:** Encrypted with **ChaCha20-Poly1305 AEAD** symmetric keys derived via Diffie-Hellman (X25519).
+- **Cryptographic Trust Handshake:** Pair securely via QR code with Short Authentication String (SAS) verification against MitM attacks.
+- **Instant Revocation:** Unpairing or deleting a device instantly destroys its key on your system, preventing any further sync.
 
 ---
 
-## 🌐 Smart Hybrid Networking
+## 🔧 Troubleshooting & Tips
 
-ClipSync dynamically switches between three network tiers to ensure lowest latency and 100% connectivity:
+### 🛡️ Windows Firewall Prompt
+- On first launch, Windows Defender Firewall may display a security alert.
+- Click **"Allow access"** for **Private networks** so ClipSync's internal background service can listen on TCP port `48901`.
+- If sync is blocked, run this one-time command in PowerShell (Admin):
+  ```powershell
+  New-NetFirewallRule -DisplayName "ClipSync Local Sync" -Direction Inbound -LocalPort 48901 -Protocol TCP -Action Allow
+  ```
 
-```mermaid
-graph TD
-    A[New Clipboard Item] --> B{Same Local Subnet?}
-    B -- Yes (mDNS Found) --> C[Direct Local TCP Socket]
-    B -- No --> D{NAT Traversal Feasible?}
-    D -- Yes (STUN Success) --> E[WebRTC Direct P2P Channel]
-    D -- Symmetric NAT / Firewalled --> F[Zero-Knowledge Encrypted Relay Forwarder]
-    C --> G[Payload Decrypted & Verified on Target]
-    E --> G
-    F --> G
+### 🔋 Android Background Sync & Battery Optimization
+- Modern Android systems aggressively sleep background apps. To guarantee continuous background sync:
+  1. Go to **Settings $\rightarrow$ Apps $\rightarrow$ ClipSync**.
+  2. Tap **Battery** $\rightarrow$ select **Unrestricted**.
+  3. Ensure **Notifications** are allowed so ClipSync can maintain its lightweight background listener.
+
+---
+
+## 🏗️ Technical Architecture & Stack
+
+| Layer | Windows Desktop | Android Phone |
+| :--- | :--- | :--- |
+| **UI Framework** | Flutter 3.47+ / Tauri 2 WebView | Flutter 3.47+ (Dart 3.13+) |
+| **System Core** | Rust 1.98+ (Tokio runtime, Arboard clipboard) | Kotlin / Android Clipboard Manager |
+| **Local Database** | SQLite 3 (persistent history & keys) | SharedPreferences & Secure Storage |
+| **Networking** | Multi-Threaded Tokio TCP HTTP Server (`:48901`) | Dart `HttpClient` & Socket Direct Stream |
+| **Cryptography** | Ring / RustCrypto (ChaCha20-Poly1305, Ed25519) | PointyCastle / Cryptography Dart library |
+
+---
+
+## 🛠️ Building From Source
+
+### Prerequisites
+- **Flutter SDK:** 3.29.0+ / 3.47+
+- **Rust & Cargo:** 1.80+ (for Windows desktop target)
+- **Android SDK:** API Level 34+
+
+### 1. Build Android APK
+```bash
+cd flutter_app
+flutter build apk --debug --android-skip-build-dependency-validation
+```
+*Output: `flutter_app/build/app/outputs/flutter-apk/app-debug.apk`*
+
+### 2. Build Windows Desktop `.exe`
+```bash
+# 1. Build frontend assets
+cd flutter_app
+flutter build web --base-href /
+cp -r build/web/* ../windows/dist/
+
+# 2. Compile release binary with Cargo
+cd ../windows/src-tauri
+cargo build --release
+```
+*Output: `windows/src-tauri/target/release/clipsync-desktop.exe`*
+
+### 3. Run Automated Tests & Linter
+```bash
+cd flutter_app
+flutter test       # Runs desktop & mobile viewport responsive tests
+flutter analyze    # Verifies zero lint errors and sound type safety
 ```
 
-- **Tier 1 — Local Direct Socket (Fastest):** Uses mDNS (`_clipsync._tcp`) to detect devices on the local Wi-Fi/LAN and opens a direct TLS/TCP connection. Sub-50ms latency.
-- **Tier 2 — WebRTC P2P (Cross-Network):** Uses a lightweight signaling server for ICE candidate exchange, establishing an encrypted P2P data channel directly across routers.
-- **Tier 3 — Encrypted Relay Forwarder (Fallback):** For symmetric NATs or restrictive firewalls, traffic is routed through a stateless WebSocket relay. Payloads remain fully E2EE encrypted end-to-end; the relay cannot inspect contents.
-
 ---
 
-## 🔄 Live Real-Time Synchronization Flow
-
-<p align="center">
-  <img src="assets/sync-animation.svg" alt="ClipSync Animated Live Sync Protocol" width="100%" />
-</p>
-
----
-
-## 🎨 Zero Gradients Rule
-
-ClipSync strictly enforces the **Zero Gradients Rule** across both desktop and mobile user interfaces:
-- **No Gradients Anywhere:** Absolutely zero CSS linear, radial, or conic gradients. Solid colors only.
-- **Curated Color Tokens:** High-contrast neutral dark/light surfaces (`#121316` / `#FFFFFF`) with crisp borders (`#2B2D31`), vibrant solid primary accents (`#2563EB`), and distinct status indicators (`#16A34A` connected, `#DC2626` error).
-- **Custom Precision SVG Icons:** Zero bloated third-party icon fonts or raster graphics. Lightweight, bespoke SVG icon components.
-
----
-
-## 📂 Project Structure
+## 📂 Project Directory Map
 
 ```
 ClipShare/
-├── shared/
-│   └── protocol/              # Canonical cross-platform protocol engine (Node.js/ESM)
-│       ├── src/               # Models, serializers, crypto primitives & state machines
-│       └── test/              # 13/13 automated protocol unit tests
-├── infrastructure/            # Self-hosted zero-knowledge signaling and relay
-│   ├── signaling/             # WebSocket ICE signaling server
-│   ├── relay/                 # Zero-knowledge E2EE packet forwarder
-│   └── docker-compose.yml     # Self-hosting orchestration
-├── windows/                   # Desktop Application (Tauri 2 + React 18 + Rust)
-│   ├── src/                   # React UI (Zero-Gradients design system, tabs, views)
-│   ├── src-tauri/             # Rust native core (clipboard monitor, SQLite, tray)
-│   │   └── target/release/    # Compiled production executable (clipsync-desktop.exe)
-│   └── dist/                  # Compiled Vite production web assets
-├── android/                   # Mobile Application (Jetpack Compose + Kotlin)
-│   ├── app/src/main/          # Compose UI, ClipboardSyncService, CameraX QR scanner
-│   ├── gradle/wrapper/        # Self-contained Gradle 8.7 wrapper
-│   └── app/build/outputs/apk/ # Compiled Android application package (app-debug.apk)
-└── docs/                      # Comprehensive technical documentation
-    ├── ARCHITECTURE.md        # Deep-dive architecture and design patterns
-    ├── SECURITY.md            # Cryptographic specs and threat model
-    ├── NETWORKING.md          # Hybrid transport and NAT traversal specs
-    ├── DEVELOPMENT.md         # Developer guide and build instructions
-    └── TESTING.md             # Test plans, test cases, and quality report
+├── clipsync-desktop.exe       # Pre-built Windows desktop app (Ready to launch)
+├── clipsync-android.apk       # Pre-built Android package (Ready to install)
+├── assets/                    # Official application branding & banner media
+│   ├── logo.png               # High-res ClipSync application icon
+│   └── clipsync-banner.jpg    # Project banner graphic
+├── flutter_app/               # Unified Cross-Platform Flutter Application
+│   ├── lib/
+│   │   ├── models/            # DeviceInfo, HistoryItem, Settings models
+│   │   ├── screens/           # Dashboard, History, Pairing, Settings views
+│   │   ├── services/          # StateService, clipboard watcher, HTTP networking
+│   │   ├── theme/             # Modern Glassmorphic Cyber Obsidian theme tokens
+│   │   └── widgets/           # RichClipboardCard, FirstLaunchDialog (onboarding naming)
+│   └── test/                  # Automated widget, responsiveness & smoke test suite
+├── windows/                   # Desktop Host Application (Tauri 2 + Rust Core)
+│   ├── src-tauri/             # Rust systems backend (Tokio thread, Arboard, SQLite)
+│   └── dist/                  # Bundled production frontend distribution
+├── docs/                      # Architectural, Security, and Networking deep dives
+│   ├── ARCHITECTURE.md        # Detailed component breakdown
+│   ├── SECURITY.md            # Cryptographic specifications & SAS pairing
+│   └── NETWORKING.md          # Wi-Fi, mDNS, and Bluetooth PAN protocols
+└── README.md                  # Project overview and user guide
 ```
-
----
-
-## 🧪 Automated Test Suite (26/26 Passing)
-
-| Suite | Component | Tests | Status |
-| :--- | :--- | :--- | :--- |
-| **Shared Protocol** | Message framing, serialization, SAS derivation, loop prevention | 13 | ✅ 13/13 Passing |
-| **Signaling Server** | Client registration, SDP handshake routing, room cleanup | 2 | ✅ 2/2 Passing |
-| **Relay Forwarder** | Opaque payload delivery, peer disconnects, stream throughput | 2 | ✅ 2/2 Passing |
-| **Windows Rust Core** | Ed25519/X25519 crypto, SQLite schema, Luhn algorithm, clipboard filter | 9 | ✅ 9/9 Passing |
-| **Android Protocol** | Path traversal sanitization, SAS derivation, loop detection | Suite | ✅ Verified |
-| **Total** | **All automated unit and integration tests** | **26** | **✅ 100% Passing** |
-
----
-
-## 🛠️ Local Development Setup
-
-### 1. Windows Desktop App
-```bash
-cd windows
-npm install
-npm run dev           # Run Vite frontend in browser
-# To run full native Tauri desktop window:
-npm run tauri dev
-```
-
-### 2. Android App
-```bash
-cd android
-./gradlew assembleDebug    # Build debug APK
-./gradlew testDebugUnitTest # Run unit tests
-```
-
-### 3. Self-Hosted Infrastructure
-```bash
-cd infrastructure
-docker compose up -d       # Launches Signaling (port 9001) & Relay (port 9002)
-```
-
----
-
-## 📖 In-Depth Documentation
-
-* 📑 [Features Specification (`FEATURES.md`)](FEATURES.md) — Exhaustive matrix of 23 specifications.
-* 🏗️ [Architecture Deep-Dive (`docs/ARCHITECTURE.md`)](docs/ARCHITECTURE.md) — System boundaries and component flows.
-* 🛡️ [Security & Threat Model (`docs/SECURITY.md`)](docs/SECURITY.md) — Cryptography, key exchange, and privacy.
-* 📡 [Networking Deep-Dive (`docs/NETWORKING.md`)](docs/NETWORKING.md) — mDNS, WebRTC, ICE, and Relay mechanics.
-* 💻 [Developer Guide (`docs/DEVELOPMENT.md`)](docs/DEVELOPMENT.md) — Environment setup and build configurations.
-* 🚦 [Testing Report (`docs/TESTING.md`)](docs/TESTING.md) — Test cases, execution logs, and verification criteria.
-* 📜 [Changelog (`CHANGELOG.md`)](CHANGELOG.md) — Version release notes.
-* 📊 [Progress Report (`PROGRESS_REPORT.md`)](PROGRESS_REPORT.md) — Signed-off development sessions log.
 
 ---
 

@@ -120,7 +120,10 @@ mod tests {
     fn test_filename_sanitization() {
         assert_eq!(sanitize_filename("../../passwd"), "passwd");
         assert_eq!(sanitize_filename("..\\..\\calc.exe"), "calc.exe");
-        assert_eq!(sanitize_filename("test<file>:name?.png"), "test_file__name_.png");
+        assert_eq!(
+            sanitize_filename("test<file>:name?.png"),
+            "test_file__name_.png"
+        );
         assert_eq!(sanitize_filename(""), "unnamed_file");
     }
 }

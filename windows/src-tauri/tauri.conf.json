@@ -12,7 +12,9 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "ClipSync",
+        "url": "index.html",
         "width": 960,
         "height": 680,
         "minWidth": 720,
@@ -20,7 +22,8 @@
         "resizable": true,
         "fullscreen": false,
         "decorations": true,
-        "transparent": false
+        "transparent": false,
+        "visible": true
       }
     ],
     "security": {

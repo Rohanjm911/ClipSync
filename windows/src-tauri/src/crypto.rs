@@ -107,13 +107,10 @@ pub fn derive_symmetric_key(shared_secret: &[u8; 32], context: &[u8]) -> [u8; 32
 }
 
 /// Encrypt plaintext using ChaCha20-Poly1305 with random 96-bit nonce
-pub fn encrypt_payload(
-    key: &[u8; 32],
-    plaintext: &[u8],
-) -> Result<(Vec<u8>, [u8; 12]), String> {
-    let cipher = ChaCha20Poly1305::new_from_slice(key)
-        .map_err(|e| format!("Cipher init failed: {}", e))?;
-    
+pub fn encrypt_payload(key: &[u8; 32], plaintext: &[u8]) -> Result<(Vec<u8>, [u8; 12]), String> {
+    let cipher =
+        ChaCha20Poly1305::new_from_slice(key).map_err(|e| format!("Cipher init failed: {}", e))?;
+
     let mut nonce_bytes = [0u8; 12];
     rand::RngCore::fill_bytes(&mut OsRng, &mut nonce_bytes);
     let nonce = Nonce::from_slice(&nonce_bytes);
@@ -131,8 +128,8 @@ pub fn decrypt_payload(
     ciphertext: &[u8],
     nonce_bytes: &[u8; 12],
 ) -> Result<Vec<u8>, String> {
-    let cipher = ChaCha20Poly1305::new_from_slice(key)
-        .map_err(|e| format!("Cipher init failed: {}", e))?;
+    let cipher =
+        ChaCha20Poly1305::new_from_slice(key).map_err(|e| format!("Cipher init failed: {}", e))?;
     let nonce = Nonce::from_slice(nonce_bytes);
 
     cipher
@@ -160,10 +157,18 @@ mod tests {
 
         let mut sig_arr = [0u8; 64];
         sig_arr.copy_from_slice(&signature);
-        assert!(verify_signature(id.verifying_key.as_bytes(), message, &sig_arr));
+        assert!(verify_signature(
+            id.verifying_key.as_bytes(),
+            message,
+            &sig_arr
+        ));
 
         // Tampered message must fail
-        assert!(!verify_signature(id.verifying_key.as_bytes(), b"tampered", &sig_arr));
+        assert!(!verify_signature(
+            id.verifying_key.as_bytes(),
+            b"tampered",
+            &sig_arr
+        ));
     }
 
     #[test]

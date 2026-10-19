@@ -233,10 +233,8 @@ impl Database {
     }
 
     pub fn clear_unpinned_history(&self) -> Result<()> {
-        self.conn.execute(
-            "DELETE FROM clipboard_history WHERE is_pinned = 0",
-            [],
-        )?;
+        self.conn
+            .execute("DELETE FROM clipboard_history WHERE is_pinned = 0", [])?;
         Ok(())
     }
 

@@ -13,7 +13,11 @@ pub fn is_sensitive_content(text: &str) -> bool {
 
     // 2. High entropy recovery seed / mnemonic heuristic (12 or 24 words from BIP39 list or standard patterns)
     let words: Vec<&str> = trimmed.split_whitespace().collect();
-    if (words.len() == 12 || words.len() == 24) && words.iter().all(|w| w.chars().all(|c| c.is_ascii_lowercase())) {
+    if (words.len() == 12 || words.len() == 24)
+        && words
+            .iter()
+            .all(|w| w.chars().all(|c| c.is_ascii_lowercase()))
+    {
         // Potential seed phrase
         return true;
     }
@@ -24,7 +28,8 @@ pub fn is_sensitive_content(text: &str) -> bool {
     }
 
     // 4. API keys / tokens (AWS, GitHub, OpenAI)
-    let re_tokens = Regex::new(r"(AKIA[0-9A-Z]{16}|ghp_[0-9a-zA-Z]{36}|sk-[a-zA-Z0-9]{32,})").unwrap();
+    let re_tokens =
+        Regex::new(r"(AKIA[0-9A-Z]{16}|ghp_[0-9a-zA-Z]{36}|sk-[a-zA-Z0-9]{32,})").unwrap();
     if re_tokens.is_match(trimmed) {
         return true;
     }
@@ -107,7 +112,13 @@ mod tests {
 
     #[test]
     fn test_url_detection() {
-        assert_eq!(detect_content_type("https://github.com/clipsync"), "text/uri-list");
-        assert_eq!(detect_content_type("Hello https://github.com/clipsync world"), "text/plain");
+        assert_eq!(
+            detect_content_type("https://github.com/clipsync"),
+            "text/uri-list"
+        );
+        assert_eq!(
+            detect_content_type("Hello https://github.com/clipsync world"),
+            "text/plain"
+        );
     }
 }
