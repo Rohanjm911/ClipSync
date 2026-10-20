@@ -4,8 +4,12 @@
 
   # 📋 ClipSync
 
-  **Copy Anywhere. Paste Everywhere.**  
-  *Zero-cloud, accountless, real-time clipboard synchronization connecting Windows PC and Android with End-to-End Encryption (E2EE).*
+  <!-- Animated Typing Tagline -->
+  <p align="center">
+    <a href="https://github.com/Rohanjm911/ClipSync">
+      <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3000&pause=1000&color=38BDF8&center=true&vCenter=true&multiline=true&width=620&height=65&lines=Copy+Anywhere.+Paste+Everywhere.;Zero-Cloud+End-to-End+Encrypted+Sync;Real-Time+Windows+PC+%E2%86%94+Android+Sync;Offline+Bluetooth+PAN+Direct+Clipboard+Bridge" alt="Typing SVG" />
+    </a>
+  </p>
 
   [![Version](https://img.shields.io/badge/Version-0.1.0--release-0B0F19?style=flat-square)](CHANGELOG.md)
   [![License](https://img.shields.io/badge/License-MIT-6366F1?style=flat-square)](LICENSE)
@@ -17,6 +21,11 @@
 
   <p align="center">
     <img src="assets/clipsync-banner.jpg" alt="ClipSync Cross-Platform Clipboard Synchronization Banner" width="100%" style="border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);" />
+  </p>
+
+  <!-- Animated Pulsing Sync Indicator Bar -->
+  <p align="center">
+    <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,2,3&height=80&section=header&text=Real-Time%20Encrypted%20Sync%20Active%20⚡&fontSize=20&fontAlign=50&fontAlignY=55&fontColor=ffffff&animation=twinkling" width="100%" alt="Sync Animation Header"/>
   </p>
 
 </div>
@@ -134,15 +143,34 @@ sequenceDiagram
 
 ---
 
-## 🏗️ Technical Architecture & Stack
+## 🛠️ Technology Stack
 
-| Layer | Windows Desktop | Android Phone |
+<p align="center">
+  <a href="https://flutter.dev"><img src="https://skillicons.dev/icons?i=flutter" alt="Flutter" title="Flutter" width="48" height="48"/></a>
+  &nbsp;&nbsp;
+  <a href="https://dart.dev"><img src="https://skillicons.dev/icons?i=dart" alt="Dart" title="Dart" width="48" height="48"/></a>
+  &nbsp;&nbsp;
+  <a href="https://www.rust-lang.org"><img src="https://skillicons.dev/icons?i=rust" alt="Rust" title="Rust" width="48" height="48"/></a>
+  &nbsp;&nbsp;
+  <a href="https://tauri.app"><img src="https://skillicons.dev/icons?i=tauri" alt="Tauri 2" title="Tauri 2" width="48" height="48"/></a>
+  &nbsp;&nbsp;
+  <a href="https://kotlinlang.org"><img src="https://skillicons.dev/icons?i=kotlin" alt="Kotlin" title="Kotlin" width="48" height="48"/></a>
+  &nbsp;&nbsp;
+  <a href="https://www.sqlite.org"><img src="https://skillicons.dev/icons?i=sqlite" alt="SQLite" title="SQLite" width="48" height="48"/></a>
+  &nbsp;&nbsp;
+  <a href="https://www.android.com"><img src="https://skillicons.dev/icons?i=android" alt="Android" title="Android" width="48" height="48"/></a>
+  &nbsp;&nbsp;
+  <a href="https://microsoft.com/windows"><img src="https://skillicons.dev/icons?i=windows" alt="Windows" title="Windows" width="48" height="48"/></a>
+</p>
+
+| Component | Technologies & Real-World Logos | Details |
 | :--- | :--- | :--- |
-| **UI Framework** | Flutter 3.47+ / Tauri 2 WebView | Flutter 3.47+ (Dart 3.13+) |
-| **System Core** | Rust 1.98+ (Tokio runtime, Arboard clipboard) | Kotlin / Android Clipboard Manager |
-| **Local Database** | SQLite 3 (persistent history & keys) | SharedPreferences & Secure Storage |
-| **Networking** | Multi-Threaded Tokio TCP HTTP Server (`:48901`) | Dart `HttpClient` & Socket Direct Stream |
-| **Cryptography** | Ring / RustCrypto (ChaCha20-Poly1305, Ed25519) | PointyCastle / Cryptography Dart library |
+| **Frontend & UI** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flutter/flutter-original.svg" width="20" height="20" align="center" alt="Flutter"/> **Flutter** &nbsp; <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dart/dart-original.svg" width="20" height="20" align="center" alt="Dart"/> **Dart** | Modern Cyber-Obsidian Glassmorphism UI, cross-platform responsiveness, smooth reactive state management. |
+| **Desktop Host** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/rust/rust-original.svg" width="20" height="20" align="center" alt="Rust"/> **Rust** &nbsp; <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tauri/tauri-original.svg" width="20" height="20" align="center" alt="Tauri"/> **Tauri 2** | Ultra-lightweight native Windows host, multi-threaded Tokio async runtime, tray integration, memory-safe OS clipboard interceptor. |
+| **Mobile Core** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original.svg" width="20" height="20" align="center" alt="Android"/> **Android** &nbsp; <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg" width="20" height="20" align="center" alt="Kotlin"/> **Kotlin** | Foreground and background sync lifecycle listener, direct PAN/Tethering socket networking. |
+| **Networking** | <img src="https://img.shields.io/badge/Tokio-Multi--Threaded_TCP-000?style=flat&logo=rust&logoColor=orange" alt="Tokio"/> &nbsp; <img src="https://img.shields.io/badge/Bluetooth-PAN_Socket-0082FC?style=flat&logo=bluetooth&logoColor=white" alt="Bluetooth"/> | Real-time TCP HTTP server on port `48901`, local Wi-Fi auto-discovery, zero-cloud offline Bluetooth PAN sockets. |
+| **Cryptography** | <img src="https://img.shields.io/badge/E2EE-ChaCha20--Poly1305-blueviolet?style=flat&logo=lock&logoColor=white" alt="ChaCha20"/> &nbsp; <img src="https://img.shields.io/badge/Key_Exchange-X25519_%7C_Ed25519-indigo?style=flat&logo=shieldsdotio&logoColor=white" alt="Ed25519"/> | Ring, RustCrypto & PointyCastle authenticated encryption with Short Authentication String (SAS) QR pairing. |
+| **Persistence** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sqlite/sqlite-original.svg" width="20" height="20" align="center" alt="SQLite"/> **SQLite 3** &nbsp; <img src="https://img.shields.io/badge/Android-SecureStorage-3DDC84?style=flat&logo=android&logoColor=white" alt="SecureStorage"/> | Local encrypted clip history, paired companion device records, zero cloud storage. |
 
 ---
 
@@ -214,3 +242,10 @@ ClipShare/
 ## 📄 License
 
 ClipSync is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+---
+
+<!-- Animated Footer Wave -->
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,2,3&height=100&section=footer" width="100%" alt="Footer Wave"/>
+</p>
